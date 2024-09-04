@@ -38,6 +38,7 @@ public class NotesManager : MonoBehaviour
 
     void OnEnable()
     {
+        NotesSpeed = GManager.instance.noteSpeed;
         noteNum = 0; // 총 노트 수를 0으로
         songName = "200"; // 플레이하는 곡명 테스트시 무조건 적기
         Load(songName);

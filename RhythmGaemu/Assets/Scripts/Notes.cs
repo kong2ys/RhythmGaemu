@@ -4,16 +4,25 @@ using UnityEngine;
 
 public class Notes : MonoBehaviour
 {
-    private float noteSpeed = 5f;
-    // Start is called before the first frame update
+    float NoteSpeed = 8;
+    bool start;
+
     void Start()
     {
-        
+        NoteSpeed = GManager.instance.noteSpeed;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        transform.position -= transform.forward * noteSpeed * Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            start = true;
+        }
+
+        if (start)
+        {
+            transform.position -= transform.forward * Time.deltaTime * NoteSpeed;
+        }
+        
     }
 }
