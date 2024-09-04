@@ -51,6 +51,7 @@ public class NotesManager : MonoBehaviour
         Data inputJson = JsonUtility.FromJson<Data>(inputString); // Json 파일 읽음
         
         noteNum = inputJson.notes.Length; // 총 노트 수 설정
+        GManager.instance.maxScore = noteNum * 5;
 
         for (int i = 0; i < inputJson.notes.Length; i++)
         {

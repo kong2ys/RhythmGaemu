@@ -1,12 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.VersionControl;
+using TMPro;
 using UnityEngine;
 
 public class Judge : MonoBehaviour
 {
     [SerializeField] private GameObject[] MessageObj;
     [SerializeField] NotesManager notesManager;
+    
+    [SerializeField] TextMeshProUGUI comboText; // ComboNum
+    [SerializeField] TextMeshProUGUI scoreText; // ScoreNum
+
+    AudioSource audio;
+    [SerializeField] AudioClip hitSound;
+
+    void Start()
+    {
+        audio = GetComponent<AudioSource>();
+    }
 
     void Update()
     {
@@ -70,11 +82,11 @@ public class Judge : MonoBehaviour
                 }
             }
 
-            // 키 입력 처리 이후에도 키가 마지막까지 눌리지 않았을 때 처리
+            // 키 입력 처리 이후에도 키가 마지막까지 눌리지 않았을 때 Miss 처리
             if (Time.time > notesManager.NotesTime[0] + 0.2f + GManager.instance.StartTime)
             {
                 message(3);
-                deleteData();
+                deleteData(0);
                 Debug.Log("Miss");
                 GManager.instance.miss++;
                 GManager.instance.combo = 0;
@@ -84,13 +96,15 @@ public class Judge : MonoBehaviour
 
     void Judgement(float timeLag, int numOffset)
     {
+        audio.PlayOneShot(hitSound);
         if (timeLag <= 0.05) // 원래 노트 처리 시간과 실제 시간 오차가 0.1초 이하라면 Perfect 판정
         {
             Debug.Log("Perfect");
             message(0);
+            GManager.instance.ratioScore += 5;
             GManager.instance.perfect++;
             GManager.instance.combo++;
-            deleteData();
+            deleteData(numOffset);
         }
         else
         {
@@ -98,9 +112,10 @@ public class Judge : MonoBehaviour
             {
                 Debug.Log("Great");
                 message(1);
+                GManager.instance.ratioScore += 3;
                 GManager.instance.great++;
                 GManager.instance.combo++;
-                deleteData();
+                deleteData(numOffset);
             }
             else
             {
@@ -108,9 +123,10 @@ public class Judge : MonoBehaviour
                 {
                     Debug.Log("Bad");
                     message(2);
+                    GManager.instance.ratioScore += 1;
                     GManager.instance.bad++;
                     GManager.instance.combo++;
-                    deleteData();
+                    deleteData(numOffset);
                 }
             }
         }
@@ -128,11 +144,14 @@ public class Judge : MonoBehaviour
         }
     }
 
-    void deleteData()
+    void deleteData(int numOffset)
     {
-        notesManager.NotesTime.RemoveAt(0);
-        notesManager.LaneNum.RemoveAt(0);
-        notesManager.NoteType.RemoveAt(0);
+        notesManager.NotesTime.RemoveAt(numOffset);
+        notesManager.LaneNum.RemoveAt(numOffset);
+        notesManager.NoteType.RemoveAt(numOffset);
+        GManager.instance.score = (int)Math.Round(1000000 * Math.Floor(GManager.instance.ratioScore / GManager.instance.maxScore * 1000000) / 1000000);
+        comboText.text = GManager.instance.combo.ToString();
+        scoreText.text = GManager.instance.score.ToString();
     }
 
     void message(int judge)
