@@ -12,9 +12,9 @@ public class MusicManager : MonoBehaviour
     void Start()
     {
         GManager.instance.Start = false;
-        songName = "200";
+        songName = "エンドマークに希望と涙を添えて";
         audio = GetComponent<AudioSource>();
-        Music = (AudioClip)Resources.Load("Music/" + songName);
+        Music = (AudioClip)Resources.Load("Musics/" + songName);
         played = false;
     }
 
