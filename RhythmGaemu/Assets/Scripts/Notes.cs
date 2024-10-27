@@ -4,24 +4,25 @@ using UnityEngine;
 
 public class Notes : MonoBehaviour
 {
-    float NoteSpeed = 8;
-    bool start;
+    private float NoteSpeed = 8;
+    private bool start;
 
-    void Start()
+    private void Start()
     {
-        NoteSpeed = GManager.instance.noteSpeed;
+        NoteSpeed = GManager.Instance.noteSpeed;
     }
-    
-    void Update()
+
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            Debug.Log("Game Start");
             start = true;
         }
 
         if (start)
         {
-            transform.position -= transform.forward * Time.deltaTime * NoteSpeed;
+            transform.position -= transform.forward * (Time.deltaTime * NoteSpeed);
         }
         
     }

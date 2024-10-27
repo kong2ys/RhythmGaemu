@@ -33,12 +33,12 @@ public class NotesManager : MonoBehaviour
     public List<float> NotesTime = new(); // 노트가 판정선과 겹치는 시간
     public List<GameObject> NotesObj = new();
 
-    [SerializeField] private float NotesSpeed; // 노트 스피드
+    [SerializeField] private float notesSpeed; // 노트 스피드
     [SerializeField] GameObject noteObj;
 
     void OnEnable()
     {
-        NotesSpeed = GManager.instance.noteSpeed;
+        notesSpeed = GManager.Instance.noteSpeed;
         noteNum = 0; // 총 노트 수를 0으로
         songName = "エンドマークに希望と涙を添えて"; // 플레이하는 곡명 테스트시 무조건 적기
         Load(songName);
@@ -51,7 +51,7 @@ public class NotesManager : MonoBehaviour
         Data inputJson = JsonUtility.FromJson<Data>(inputString); // Json File Parsing
         
         noteNum = inputJson.notes.Length; // 총 노트 수 설정
-        GManager.instance.maxScore = noteNum * 5;
+        GManager.Instance.maxScore = noteNum * 5;
 
         for (int i = 0; i < inputJson.notes.Length; i++)
         {
@@ -66,7 +66,7 @@ public class NotesManager : MonoBehaviour
             NoteType.Add(inputJson.notes[i].type);
             
             // 노트 생성
-            float z = NotesTime[i] * NotesSpeed;
+            float z = NotesTime[i] * notesSpeed;
             NotesObj.Add(Instantiate(noteObj, new Vector3(inputJson.notes[i].block -1.5f, 0.55f, z), Quaternion.identity));
         }
     }

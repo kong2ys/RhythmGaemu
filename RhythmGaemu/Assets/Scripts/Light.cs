@@ -12,13 +12,13 @@ public class Light : MonoBehaviour
 
     
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rend = GetComponent<Renderer>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!(rend.material.color.a <= 0f))
         {
@@ -56,7 +56,7 @@ public class Light : MonoBehaviour
         alfa -= Time.deltaTime * speed;
     }
 
-    void ColorChange()
+    private void ColorChange()
     {
         alfa = 0.3f;
         rend.material.color = new Color(rend.material.color.r, rend.material.color.g, rend.material.color.b, alfa);
