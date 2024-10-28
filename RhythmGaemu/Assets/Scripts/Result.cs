@@ -22,6 +22,7 @@ public class Result : MonoBehaviour
 
     public void Retry()
     {
+        // Init
         GManager.Instance.perfect = 0;
         GManager.Instance.great = 0;
         GManager.Instance.bad = 0;
