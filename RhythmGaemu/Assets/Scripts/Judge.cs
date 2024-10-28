@@ -106,7 +106,7 @@ public class Judge : MonoBehaviour
     private int Judgement(float timeLag)
     {
         audio.PlayOneShot(hitSound);
-        if (timeLag <= 0.05) // 원래 노트 처리 시간과 실제 시간 오차가 0.1초 이하라면 Perfect 판정
+        if (timeLag <= 0.05) // 원래 노트 처리 시간과 실제 시간 오차가 0.05초 이하라면 Perfect 판정
         {
             Debug.Log("Perfect");
             // message(notesManager.LaneNum[numOffset], 0);
@@ -116,7 +116,7 @@ public class Judge : MonoBehaviour
             // deleteData(numOffset);
             return 0;
         }
-        if (timeLag <= 0.08) // 원래 노트 처리 시간과 실제 시간 오차가 0.15초 이하라면 Great 판정
+        if (timeLag <= 0.08) // 원래 노트 처리 시간과 실제 시간 오차가 0.08초 이하라면 Great 판정
         {
             Debug.Log("Great");
             // message(notesManager.LaneNum[numOffset], 1);
@@ -127,7 +127,7 @@ public class Judge : MonoBehaviour
             return 1;
         }
 
-        if (timeLag <= 0.10) // 원래 노트 처리 시간과 실제 시간 오차가 0.2초 이하라면 Bad 판정
+        if (timeLag <= 0.10) // 원래 노트 처리 시간과 실제 시간 오차가 0.1초 이하라면 Bad 판정
         {
             Debug.Log("Bad");
             // message(notesManager.LaneNum[numOffset], 2);
